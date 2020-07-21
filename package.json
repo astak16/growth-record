@@ -1,0 +1,31 @@
+{
+  "name": "study-note",
+  "version": "1.1.1",
+  "description": "> Create by 天天天天天 2020-01-10",
+  "main": "index.js",
+  "dependencies": {},
+  "devDependencies": {
+    "cz-conventional-changelog": "^3.1.0",
+    "husky": "^4.2.5",
+    "validate-commit-msg": "^2.14.0"
+  },
+  "scripts": {
+    "commitmsg": "validate-commit-msg"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/astak16/Notes.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/astak16/Notes/issues"
+  },
+  "homepage": "https://github.com/astak16/Notes#readme",
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
+  }
+}

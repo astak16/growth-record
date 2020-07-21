@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="zh">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>三栏布局</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      .container {
+        height: 100px;
+        border-bottom: 1px solid black;
+      }
+      .item {
+        height: 100%;
+      }
+      .left {
+        width: 300px;
+        background-color: red;
+      }
+      .right {
+        width: 300px;
+        background-color: blue;
+      }
+      .center {
+        background-color: yellow;
+      }
+      .question{
+        height: 100px;
+        line-height: 100px;
+        text-align: center;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="question">
+      题目：假设高度已知，请写出三栏布局，其中左栏、右栏宽度各为`300`px，中间自适应。
+    </div>
+    <section class="module1">
+      <style>
+        .module1 .container {
+          display: flex;
+        }
+        .module1 .center {
+          flex: 1;
+        }
+      </style>
+      <div class="container">
+        <div class="item left"></div>
+        <div class="item center">
+          方案一：flex布局
+        </div>
+        <div class="item right"></div>
+      </div>
+    </section>
+    <section class="module2">
+      <style>
+        .clearfix::after {
+          content: "";
+          clear: both;
+          display: block;
+        }
+        .module2 .left {
+          float: left;
+        }
+        .module2 .right {
+          float: right;
+        }
+      </style>
+      <div class="container clearfix">
+        <div class="item left"></div>
+        <div class="item right"></div>
+        <div class="item center">
+          方案二：float布局，注意：浮动元素必须在非浮动元素之前，及需要清除浮动
+        </div>
+      </div>
+    </section>
+    <section class="module3">
+      <style>
+        .module3 .container {
+          position: relative;
+        }
+        .module3 .left {
+          position: absolute;
+          left: 0;
+          top: 0;
+        }
+        .module3 .center {
+          position: absolute;
+          top: 0;
+          left: 300px;
+          right: 300px;
+        }
+        .module3 .right {
+          position: absolute;
+          right: 0;
+          top: 0;
+        }
+      </style>
+      <div class="container">
+        <div class="item left"></div>
+        <div class="item center">方案三：position布局</div>
+        <div class="item right"></div>
+      </div>
+    </section>
+    <section class="module4">
+      <style>
+        .module4 .container{
+          display: table;
+          width: 100%;
+        }
+        .module4 .item{
+          display: table-cell;
+        }
+      </style>
+      <div class="container">
+        <div class="item left"></div>
+        <item class="item center">方案四：table布局</item>
+        <div class="item right"></div>
+      </div>
+    </section>
+    <section class="module5">
+      <style>
+      .module5 .container{
+        display: grid;
+        grid-template-rows: 100px;
+        grid-template-columns: 300px auto 300px;
+      }
+      </style>
+      <div class="container">
+        <div class="item left"></div>
+        <item class="item center">方案五：gird布局</item>
+        <div class="item right"></div>
+      </div>
+    </section>
+  </body>
+</html>
