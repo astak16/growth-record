@@ -2,7 +2,7 @@
 
 React Components 指的就是 component 组件
 
-Store 指的就是存储数据的公共区域 
+Store 指的就是存储数据的公共区域
 
 这个过程就像在图书馆借书的一个过程
 
@@ -13,7 +13,7 @@ Store 指的就是存储数据的公共区域
 1. `store` 是唯一的
 2. 只有 `store` 能够改变自己的内容
 3. `Reducer` 必须是纯函数
-    - 纯函数指的是，给定固定的输入，就一定会有固定的输出，而且不会有任何副作用
+   - 纯函数指的是，给定固定的输入，就一定会有固定的输出，而且不会有任何副作用
 
 安装
 
@@ -24,11 +24,11 @@ yarn add redux
 新建 `store/index.js`
 
 ```jsx
-import { createStore } from 'redux'
-import reducer from './reducer'
+import { createStore } from "redux";
+import reducer from "./reducer";
 
-const store = createStore(reducer)
-export default store
+const store = createStore(reducer);
+export default store;
 ```
 
 新建 `store/reducer.js`
@@ -36,22 +36,22 @@ export default store
 ```jsx
 // 根据业务设置默认数据
 const defaultState = {
-	inputValue: '',
-	list: []
-}
+  inputValue: "",
+  list: [],
+};
 /**
  *
  * state 整个 store 的数据，修改前的 store
  * action 传递过来的 action
  */
 export default (state = defaultState, action) => {
-	if(action.type === 'change_input_value'){
-		const newState = JSON.parse(JSON.stringify(state))
-		newState.inputValue = action.value
-		return newState
-	}
-	return state
-}
+  if (action.type === "change_input_value") {
+    const newState = JSON.parse(JSON.stringify(state));
+    newState.inputValue = action.value;
+    return newState;
+  }
+  return state;
+};
 // Tip: reducer 可以接受 state，但是绝不能修改 state
 ```
 
@@ -77,7 +77,7 @@ handleChange(){
 新建 `store/actionTypes`
 
 ```jsx
-export const CHANGE_INPUT_VALUE = change_input_value
+export const CHANGE_INPUT_VALUE = change_input_value;
 ```
 
 ### 拆分 actionCreators
@@ -122,7 +122,7 @@ componentDidMount() {
 
 ![](./images/redux2.png)
 
- View 在 Redux 中会派发一个 Action，Action 通过 Store 的 Dispatch 方法传递给 Store，Store 接收到 Action，连同之前的 State 一起传给 Reducer，Reducer 返回一个新的数据给 Store，Store 去改变自己的 State，这是 Redux 的一个标准流程。
+View 在 Redux 中会派发一个 Action，Action 通过 Store 的 Dispatch 方法传递给 Store，Store 接收到 Action，连同之前的 State 一起传给 Reducer，Reducer 返回一个新的数据给 Store，Store 去改变自己的 State，这是 Redux 的一个标准流程。
 
 Redux 的中间件在这个流程里面指的是 Action 和 Store 之间，在 Redux 中，Action 只能是一个对象，所以 Action 是一个对象直接派发给了 Store，当使用了 Redux-thunk 之后，Action 可以是函数，Action 通过 Dispatch 方法传递给 Store，那么 Action 和 Store 之间是谁？是不是就是 Dispatch 这个方法，实际上我们说的中间件指的是对 Dispatch 方法的封装。
 
@@ -135,40 +135,41 @@ Redux 的中间件在这个流程里面指的是 Action 和 Store 之间，在 R
 ```jsx
 // actionCreators.js
 export const initListAction = (data) => ({
-	type: INIT_LIST_ACTION,
-	data
-})
+  type: INIT_LIST_ACTION,
+  data,
+});
 
 // store/sagas.js
-import {takeEvery, put} from 'redux-saga/effects'
-import {GET_INIT_LIST} from './actionTypes'
+import { takeEvery, put } from "redux-saga/effects";
+import { GET_INIT_LIST } from "./actionTypes";
 
 function* getInitList() {
-	const res = yield axios.get('/list.json')
-	const action = initListAction(data)
-	yield put(action)
+  const res = yield axios.get("/list.json");
+  const action = initListAction(data);
+  yield put(action);
 }
 
 function* todoSagas() {
-	yield takeEvery('GET_INIT_LIST', getInitList)
+  yield takeEvery("GET_INIT_LIST", getInitList);
 }
 
-export default todoSagas
+export default todoSagas;
 ```
 
 ```jsx
 // store/index.js
-import createSageMiddleware from 'redux-sage'
-import todoSagas from './sagas.js'
+import createSageMiddleware from "redux-sage";
+import todoSagas from "./sagas.js";
 
-const sageMiddleware = createSagaMiddleware()
-const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION__ &&  window.__REDUX_DEVTOOLS_EXTENSION__()
-const enhancer = composeEnhancers(applyMiddleware(sageMiddleware))
+const sageMiddleware = createSagaMiddleware();
+const composeEnhancers =
+  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__();
+const enhancer = composeEnhancers(applyMiddleware(sageMiddleware));
 
-const store = createStore(reducer, enhancer)
-sagaMiddleware.run(todoSagas)
+const store = createStore(reducer, enhancer);
+sagaMiddleware.run(todoSagas);
 
-export default store
+export default store;
 ```
 
 ```jsx
@@ -183,57 +184,58 @@ componentDidMount() {
 
 ```jsx
 // index.js
-import store from './store'
+import store from "./store";
 const App = () => {
-	<Provider store={store}>
-		<TodoList />
-	</Provider>
-}
+  <Provider store={store}>
+    <TodoList />
+  </Provider>;
+};
 
 // 组件
-import React, {Component} from 'react'
-import {connect} from 'react-redux'
+import React, { Component } from "react";
+import { connect } from "react-redux";
 
-class TodoList extends Component { 
-	render() {
-		<div>
-			<div>
-				<input value={this.props.inputValue}
-					onChange={this.props.changeInputValue}
-				/>
-				<button>提交</button>
-			</div>
-		</div>
-	}
+class TodoList extends Component {
+  render() {
+    <div>
+      <div>
+        <input
+          value={this.props.inputValue}
+          onChange={this.props.changeInputValue}
+        />
+        <button>提交</button>
+      </div>
+    </div>;
+  }
 }
 
 const mapStateToProps = (state) => {
-	return {
-		inputValue: state.inputValue
-	}
-}
+  return {
+    inputValue: state.inputValue,
+  };
+};
 
 const mapDispatchToProps = (dispatch) => {
-	return {
-		changeInputValue(e) {
-			const action = {
-				type: 'change_input_value',
-				value: e.target.value
-			}
-			dispatch(action)
-		}
-	}
-}
+  return {
+    changeInputValue(e) {
+      const action = {
+        type: "change_input_value",
+        value: e.target.value,
+      };
+      dispatch(action);
+    },
+  };
+};
 
-export default connect(mapStateToProps, mapDispatchToProps )(TodoList)
+export default connect(mapStateToProps, mapDispatchToProps)(TodoList);
 
 // reducers.js
 export default (state = defaultState, action) => {
-	if(action.type === 'change_input_value'){
-		const newState = JSON.parse(JSON.stringify(state))
-		newState.inputValue = action.value
-		return newState
-	}
-	return state
-}
+  if (action.type === "change_input_value") {
+    const newState = JSON.parse(JSON.stringify(state));
+    newState.inputValue = action.value;
+    return newState;
+  }
+  return state;
+};
 ```
