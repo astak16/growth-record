@@ -11,19 +11,20 @@ interface IHelloProps {
   message?: string;
 }
 
-const Hello: React.FunctionComponent<IHelloProps> = props => {
+const Hello: React.FunctionComponent<IHelloProps> = (props) => {
   return <h2>{props.message}</h2>;
 };
 
 Hello.defaultProps = {
-  message: "Hello  world" 
+  message: "Hello  world",
 };
 ```
 
 ## `React Hook`
+
 - 完全可选
 - 百分百向后兼容
-- 没有计划从`React`移除`class` 
+- 没有计划从`React`移除`class`
 
 `Hook`是一个特殊的函数，它可以让你勾入`React`特性，例如`useState`就允许在`React`函数组件添加`state Hook`。
 
@@ -32,22 +33,31 @@ Hello.defaultProps = {
 ## `useState`
 
 分开使用
+
 ```ts
 import React, { useState } from "react";
 
 const LikeButton: React.FC = () => {
-  const [like,setLike] = useState(0)
-  const [on,setOn] = useState(true)
-  return(
+  const [like, setLike] = useState(0);
+  const [on, setOn] = useState(true);
+  return (
     <>
-      <button onClick={()=>{setLike(like + 1)}}>
+      <button
+        onClick={() => {
+          setLike(like + 1);
+        }}
+      >
         {like}👍
       </button>
-      <button onClick={()=>{setOn(!on)}}>
+      <button
+        onClick={() => {
+          setOn(!on);
+        }}
+      >
         {on ? "ON" : "OFF"}
       </button>
     </>
-  )
+  );
 };
 
 export default LikeButton;
@@ -59,21 +69,30 @@ export default LikeButton;
 import React, { useState } from "react";
 
 const LikeButton: React.FC = () => {
-  const [obj,setObj] = useState({like:1,on:true})
-  return(
+  const [obj, setObj] = useState({ like: 1, on: true });
+  return (
     <>
-      <button onClick={()=>{setObj({ like: obj.like + 1, on: obj.on })}}>
+      <button
+        onClick={() => {
+          setObj({ like: obj.like + 1, on: obj.on });
+        }}
+      >
         {obj.like}👍
       </button>
-      <button onClick={()=>{setObj({ like: obj.like, on: !obj.on })}}>
+      <button
+        onClick={() => {
+          setObj({ like: obj.like, on: !obj.on });
+        }}
+      >
         {obj.on ? "ON" : "OFF"}
       </button>
     </>
-  )
+  );
 };
 
 export default LikeButton;
 ```
+
 ## 删除数据
 
 `react` 中有一个概念 `immutable` ，意思是不允许 `state` 有任何的改变。
@@ -81,13 +100,13 @@ export default LikeButton;
 一旦修改 `state` ，后面做 react 性能做优化的时候会有问题。
 
 ```jsx
-const {list} = [...this.state.list]
-list.splice(1, 1)
-this.setState({	list })
+const { list } = [...this.state.list];
+list.splice(1, 1);
+this.setState({ list });
 
 // 不推荐
-this.state.list.splice(1, 1)
-this.setState({ list: this.state.list })
+this.state.list.splice(1, 1);
+this.setState({ list: this.state.list });
 ```
 
 ## 属性名
@@ -108,22 +127,22 @@ this.setState({ list: this.state.list })
 
 ```jsx
 class TodoList extends Component {
-	deleteItem = (number) => {
-		alert(number)
-	}
-	render() {
-		return <TodoItem deleteItem={this.deleteItem} />
-	}
+  deleteItem = (number) => {
+    alert(number);
+  };
+  render() {
+    return <TodoItem deleteItem={this.deleteItem} />;
+  }
 }
 
 class TodoItem extends Component {
-	constructor(props){
-		super(props)
-	}
-	
-	render() {
-		return <div onClick={this.props.deleteItem(1)}>按钮</div>
-	}
+  constructor(props) {
+    super(props);
+  }
+
+  render() {
+    return <div onClick={this.props.deleteItem(1)}>按钮</div>;
+  }
 }
 ```
 
@@ -150,13 +169,13 @@ onClick() {
 限制父组件向子组件传值的类型
 
 ```jsx
-import PropTypes from 'prop-types'
+import PropTypes from "prop-types";
 TodoItem.propTypes = {
-	test: PropTypes.string.isRequired,
-	content: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-	deleteItem: PropTypes.func,
-	index: PropTypes.number
-}
+  test: PropTypes.string.isRequired,
+  content: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  deleteItem: PropTypes.func,
+  index: PropTypes.number,
+};
 ```
 
 ## defaultProps
@@ -165,8 +184,8 @@ TodoItem.propTypes = {
 
 ```jsx
 TodoItem.defaultProps = {
-	test: 'hello world'
-}
+  test: "hello world",
+};
 ```
 
 ## 虚拟 DOM
@@ -175,24 +194,24 @@ TodoItem.defaultProps = {
 
 1. state 数数据
 2. JSX 模版
-3. 数据 + 模版 生成虚拟DOM（虚拟 DOM 就是一个 js 对象，用它来描述正式的 DOM），（损耗了性能）。
+3. 数据 + 模版 生成虚拟 DOM（虚拟 DOM 就是一个 js 对象，用它来描述正式的 DOM），（损耗了性能）。
 
-    ```jsx
-    ['div', {id: 'name'}, ['span', {}, 'hello world']]
-    ```
+   ```jsx
+   ["div", { id: "name" }, ["span", {}, "hello world"]];
+   ```
 
 4. 用虚拟 DOM 的结构生成真实的 DOM，来显示
 
-    ```html
-    <div id='abc'><span>abc</span></div>
-    ```
+   ```html
+   <div id="abc"><span>abc</span></div>
+   ```
 
 5. state 发生变化（setState 时，数据会发生变化）
 6. 数据 + 模版 生成新的虚拟 DOM（极大提升了性能），diff 算法，react 中的 diff 是同层比较，如果第一层节点就发生了变化，下面就不在比较了，直接全部替换
 
-    ```jsx
-    ['div', {id: 'name'}, ['span', {}, 'bye bye']]
-    ```
+   ```jsx
+   ["div", { id: "name" }, ["span", {}, "bye bye"]];
+   ```
 
 7. 比较原始虚拟 DOM 和新的虚拟 DOM 的区别，找到区别的是 span 中的内容（极大提升了性能）
 8. 直接操作 DOM，改变 span 中的内容
@@ -202,15 +221,13 @@ TodoItem.defaultProps = {
 react 建议用数据驱动，尽量不要去操作 DOM
 
 ```jsx
-<input onChange={this.onChange} 
-			 ref={(input) => this.input = input} 
-/>
+<input onChange={this.onChange} ref={(input) => (this.input = input)} />;
 
 onChange = (e) => {
-	const value = this.input.value
-	// 等价于
-	const value = e.target.value
-}
+  const value = this.input.value;
+  // 等价于
+  const value = e.target.value;
+};
 ```
 
 ## 声明周期函数
@@ -222,8 +239,8 @@ onChange = (e) => {
 - componentWillUpdate：组件被更新之前执行，但在 shouldComponentUpdate 之后（shouldComponentUpdate 返回 true 才会被执行）
 - componentDidUpdate：组件更新完之后执行
 - componentWillReceiveProps：没有 props 参数，不会被执行
-    1. 一个组件要从父组件接收参数
-    2. 只要父组件的 render 函数被重新执行了，子组件的 componentWillReceiveProps 就会被执行（如果子组件第一次出现在页面中，不会执行）
+  1. 一个组件要从父组件接收参数
+  2. 只要父组件的 render 函数被重新执行了，子组件的 componentWillReceiveProps 就会被执行（如果子组件第一次出现在页面中，不会执行）
 - componentWillUnmount：组件被移除前执行
 
 ### shouldComponentUpdate
@@ -236,7 +253,7 @@ onChange = (e) => {
 shouldComponentUpdate(nextProps, nextState) {
 	if(nextProps.content !== this.props.content) {
 		return true
-	} else { 
+	} else {
 		return false
 	}
 }
@@ -247,17 +264,17 @@ shouldComponentUpdate(nextProps, nextState) {
 安装 `react-transition-group`
 
 ```jsx
-import {CSSTransition} from 'react-transtion-group'
+import { CSSTransition } from "react-transtion-group";
 
-<CSSTransition 
-	in={this.stata.show}       // 告诉 CSSTransition 组件什么时候有动画
-	timeout={1000}    // 动画时长 1s
-	className='fade'
-	unmountOnExit    // 元素消失后会被移除
-	appear={true}    // 页面一刷新，也会有动画效果
+<CSSTransition
+  in={this.stata.show} // 告诉 CSSTransition 组件什么时候有动画
+  timeout={1000} // 动画时长 1s
+  className="fade"
+  unmountOnExit // 元素消失后会被移除
+  appear={true} // 页面一刷新，也会有动画效果
 >
-	<div>hello</div>
-</CSSTransition>
+  <div>hello</div>
+</CSSTransition>;
 ```
 
 - fade-enter（动画进入前一瞬间）
