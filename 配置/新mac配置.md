@@ -1,7 +1,11 @@
 
 [`iterm2`配置](https://lhajh.github.io/mac/2018/04/25/Iterm2-usage-and-skills.html)
 
-## `brew`安装
+## `homebrew`安装
+
+如果官方教程没法安装，可参考：[mac下镜像飞速安装Homebrew教程](https://zhuanlan.zhihu.com/p/90508170)
+
+## `node`安装
 
 `node`需要用`brew`安装，否则全局安装东西时没有权限
 
@@ -49,6 +53,10 @@ cd ios && pod install
 // pod install -bash: pod: command not found
 sudo gem install cocoapods
 ```
+
+## 设置`ssh key`
+1. 在终端输入`ssh-keygen`，一路回车，会在当前用户名下生成一个`.ssh`的文件夹。
+2. `cat ~/.ssh/id_rsa.pub`就可以看到`ssh key`
 
 ## 安装`oh my zsh`
 ```js
@@ -152,6 +160,16 @@ nrm ls
 3、切换源
 ```js
 nrm use taobao
+```
+
+4、 添加源
+```js
+nrm add xxx https://xxxx
+```
+
+5、删除源
+```js
+nrm del xxx
 ```
 
 > Tips：`yarn`配置查看`yarn config`；`yarn`的源管理器`yrm`，安装方式`yarn global add yrm`
