@@ -64,3 +64,11 @@ previous change   //跳转修改的地方
 配置：
 
 找到当前项目 -> `node_modules/@vue/cli-service/webpack.config.js`
+
+## webstorm 缓存
+删除`webstorm`缓存
+```bash
+cd ~/Libaray/Preference
+
+rm -rf WebStorm2019.3
+```
