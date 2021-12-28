@@ -1,5 +1,74 @@
 # SQL 题目解析
 
+```sql
+--建表
+--学生表
+CREATE TABLE `student`(
+	`s_id` VARCHAR(20),
+	`s_name` VARCHAR(20) NOT NULL DEFAULT '',
+	`s_age` VARCHAR(20) NOT NULL DEFAULT '',
+	`s_sex` VARCHAR(10) NOT NULL DEFAULT '',
+	PRIMARY KEY(`s_id`)
+);
+--课程表
+CREATE TABLE `course`(
+	`c_id`  VARCHAR(20),
+	`c_name` VARCHAR(20) NOT NULL DEFAULT '',
+	`t_id` VARCHAR(20) NOT NULL,
+	PRIMARY KEY(`c_id`)
+);
+--教师表
+CREATE TABLE `teacher`(
+	`t_id` VARCHAR(20),
+	`t_name` VARCHAR(20) NOT NULL DEFAULT '',
+	PRIMARY KEY(`t_id`)
+);
+--成绩表
+CREATE TABLE `sc`(
+	`s_id` VARCHAR(20),
+	`c_id`  VARCHAR(20),
+	`score` INT(3),
+	PRIMARY KEY(`s_id`,`c_id`)
+);
+
+--插入学生表测试数据
+insert into student values('01' , '赵雷' , '1990-01-01' , '男');
+insert into student values('02' , '钱电' , '1990-12-21' , '男');
+insert into student values('03' , '孙风' , '1990-05-20' , '男');
+insert into student values('04' , '李云' , '1990-08-06' , '男');
+insert into student values('05' , '周梅' , '1991-12-01' , '女');
+insert into student values('06' , '吴兰' , '1992-03-01' , '女');
+insert into student values('07' , '郑竹' , '1989-07-01' , '女');
+insert into student values('08' , '王菊' , '1990-01-20' , '女');
+--课程表测试数据
+insert into course values('01' , '语文' , '02');
+insert into course values('02' , '数学' , '01');
+insert into course values('03' , '英语' , '03');
+--教师表测试数据
+insert into teacher values('01' , '张三');
+insert into teacher values('02' , '李四');
+insert into teacher values('03' , '王五');
+--成绩表测试数据
+insert into sc values('01' , '01' , 80);
+insert into sc values('01' , '02' , 90);
+insert into sc values('01' , '03' , 99);
+insert into sc values('02' , '01' , 70);
+insert into sc values('02' , '02' , 60);
+insert into sc values('02' , '03' , 80);
+insert into sc values('03' , '01' , 80);
+insert into sc values('03' , '02' , 80);
+insert into sc values('03' , '03' , 80);
+insert into sc values('04' , '01' , 50);
+insert into sc values('04' , '02' , 30);
+insert into sc values('04' , '03' , 20);
+insert into sc values('05' , '01' , 76);
+insert into sc values('05' , '02' , 87);
+insert into sc values('06' , '01' , 31);
+insert into sc values('06' , '03' , 34);
+insert into sc values('07' , '02' , 89);
+insert into sc values('07' , '03' , 98);
+```
+
 [01 查询 01 课程比 02 课程成绩高的学生信息及课程分数](SQL%20%E9%A2%98%E7%9B%AE%E8%A7%A3%E6%9E%90/01%20%E6%9F%A5%E8%AF%A2%2001%20%E8%AF%BE%E7%A8%8B%E6%AF%94%2002%20%E8%AF%BE%E7%A8%8B%E6%88%90%E7%BB%A9%E9%AB%98%E7%9A%84%E5%AD%A6%E7%94%9F%E4%BF%A1%E6%81%AF%E5%8F%8A%E8%AF%BE%E7%A8%8B%E5%88%86%E6%95%B0.md)
 
 [02 查询 01 课程比 02 课程成绩低的学生信息及课程分数](SQL%20%E9%A2%98%E7%9B%AE%E8%A7%A3%E6%9E%90/02%20%E6%9F%A5%E8%AF%A2%2001%20%E8%AF%BE%E7%A8%8B%E6%AF%94%2002%20%E8%AF%BE%E7%A8%8B%E6%88%90%E7%BB%A9%E4%BD%8E%E7%9A%84%E5%AD%A6%E7%94%9F%E4%BF%A1%E6%81%AF%E5%8F%8A%E8%AF%BE%E7%A8%8B%E5%88%86%E6%95%B0.md)
